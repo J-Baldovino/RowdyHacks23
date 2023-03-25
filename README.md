@@ -7,7 +7,7 @@ Basic command to create a venv: $ python -m venv /path/to/new/virtual/environmen
 Example: `python -m venv basic` creates a venv called basic
 
 Basic command to activate an env: $ source /Scripts/activate  
-Example: `source ./basic/Scripts/activate
+Example: `source ./basic/Scripts/activate`
 
 REMEMBER: Add the venv into the .gitignore file or else it will be pushed into the repo the outlined venv name is currently
 
