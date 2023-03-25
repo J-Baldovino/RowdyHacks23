@@ -23,9 +23,14 @@ fruitPosition = [random.randrange(1, (1280 // 10)) * 10,
 fruitSpawn = True
 
 #Snake Head Position
-snakePosX = 0
-snakePosY = 0
+snakePosX = 100
+snakePosY = 100
 orientation = 0 #0 = North, 1 = East, 2 = South, 3 = West
+snake_body = [[100,100],
+              [90, 100],
+              [80, 100],
+              [70, 100]  
+            ]
 
 def turnController(orientation, keys):
     if keys[pygame.K_UP]  and orientation != 2:
@@ -64,6 +69,10 @@ while running:
             fruitPosition = [random.randrange(1, (1280 // 10)) * 10,
                                 random.randrange(1, (720 // 10)) * 10]
         fruitSpawn = True
+
+        for pos in snake_body:
+            pygame.draw.rect(screen, green, 
+                             pygame.Rect(pos[0], pos[1], 10, 10))
         
         screen.fill(black)
         pygame.draw.rect(screen, white, pygame.Rect(fruitPosition[0], fruitPosition[1], 10, 10))
