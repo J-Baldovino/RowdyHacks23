@@ -1,14 +1,30 @@
 import pygame
+import random
+
+#Color values
+black = pygame.Color(0, 0, 0)
+white = pygame.Color(255, 255, 255)
+red = pygame.Color(255, 0, 0)
+green = pygame.Color(0, 255, 0)
+blue = pygame.Color(0, 0, 255)
 
 #Pygame set up
 pygame.init()
+
+pygame.display.set_caption("Snake Game")
+
 screen = pygame.display.set_mode((1280, 720))
 clock = pygame.time.Clock()
 running = True
 
+#Fruit Positioning
+fruitPosition = [random.randrange(1, (1280 // 10)) * 10,
+                    random.randrange(1, (720 // 10)) * 10]
+fruitSpawn = True
+
 #Snake Head Position
-posX = 0
-posY = 0
+snakePosX = 0
+snakePosY = 0
 orientation = 0 #0 = North, 1 = East, 2 = South, 3 = West
 
 def turnController(orientation, keys):
@@ -22,19 +38,20 @@ def turnController(orientation, keys):
         orientation = 3
     return orientation
 
-def movement(orientation, posX, posY):
+def movement(orientation, snakePosX, snakePosY):
     match orientation:
         case 0:
-            posY += 1
+            snakePosY += 1
         case 1:
-            posX += 1
+            snakePosX += 1
         case 2:
-            posY -= 1
+            snakePosY -= 1
         case 3:
-            posX -= 1
+            snakePosX -= 1
         case default:
-            posY += 1
-    return (posX, posY)
+            snakePosY += 1
+    return (snakePosX, snakePosY)
+
 
 #Main Function
 while running:
@@ -43,15 +60,21 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN:
             orientation = turnController(orientation, pygame.key.get_pressed())
-    position = movement(orientation, posX, posY)
-    posX = position[0]
-    posY = position[1]
-    print("Orientation: " + str(orientation) + " PostionX: " + str(posX) + " PositionY: " + str(posY))
-    screen.fill("Purple")
+        if not fruitSpawn:
+            fruitPosition = [random.randrange(1, (1280 // 10)) * 10,
+                                random.randrange(1, (720 // 10)) * 10]
+        fruitSpawn = True
+        
+        screen.fill(black)
+        pygame.draw.rect(screen, white, pygame.Rect(fruitPosition[0], fruitPosition[1], 10, 10))
 
-    #render game
+        position = movement(orientation, snakePosX, snakePosY)
+        snakePosX = position[0]
+        snakePosY = position[1]
+        print("Orientation: " + str(orientation) + " PostionX: " + str(snakePosX) + " PositionY: " + str(snakePosY))
+        
+        pygame.display.update()
 
-    pygame.display.flip()
-    clock.tick(60)
+        #render game
 
-pygame.quit()
+        clock.tick(60)
