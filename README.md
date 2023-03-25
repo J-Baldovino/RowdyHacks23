@@ -11,6 +11,6 @@ Example: `source ./basic/Scripts/activate`
 
 REMEMBER: Add the venv into the .gitignore file or else it will be pushed into the repo the outlined venv name is currently
 
-IMPORTING VENV: Allows the user to install the basic venv that I used for the project `pip install -r requirements.txt`
+IMPORTING VENV: Allows the user to install the venv packages that are used for the project `pip install -r requirements.txt`
 
 UPDATING VENV: When new packages are installed, update the import file $ python -m pip freeze > requirements.txt
