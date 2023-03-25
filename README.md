@@ -1,5 +1,6 @@
 # RowdyHacks23
 
+**Must be using Git Bash or anything else that runs Python commands**  
 Virtual env are being used to run the programs, so make sure to always activate an env before running or trying to work on anything
 
 Basic command to create a venv: $ python -m venv /path/to/new/virtual/environment  
