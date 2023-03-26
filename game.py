@@ -92,6 +92,8 @@ while running:
         for bullet in bullets:
             i += 1 #debug code
             bullet.bulletTravel()
+            pygame.draw.rect(screen, white, 
+                             pygame.Rect(bullet.getPosX(), bullet.getPosY(), 10, 10))
             print("Bullet " + str(i) + ": " + " Orientation: " + str(bullet.getOrientation()) + " PositionX: " + str(bullet.getPosX()) + " PositionY: " + str(bullet.getPosY()))
 
         screen.fill(black)

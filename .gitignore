@@ -5,3 +5,4 @@ polyGen.py
 shapes.py
 shakeTemp.py
 random_polygon.png
+__pycache__/
