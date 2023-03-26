@@ -1,3 +1,4 @@
+from bullet import Bullet
 import pygame
 import random
 
@@ -22,7 +23,7 @@ fruitPosition = [random.randrange(1, (1280 // 10)) * 10,
                     random.randrange(1, (720 // 10)) * 10]
 fruitSpawn = True
 
-#Snake Head Position
+#Snake Position
 snakePosX = 100
 snakePosY = 100
 orientation = 0 #0 = North, 1 = East, 2 = South, 3 = West
@@ -31,6 +32,7 @@ snake_body = [[100,100],
               [80, 100],
               [70, 100]  
             ]
+bullets = []
 
 def turnController(orientation, keys):
     if keys[pygame.K_UP]  and orientation != 2:
@@ -41,6 +43,9 @@ def turnController(orientation, keys):
         orientation = 2
     elif keys[pygame.K_LEFT] and orientation != 1:
         orientation = 3
+    elif keys[pygame.K_SPACE]:
+        print("pew") #debug code
+        bullets.append(Bullet(snakePosX, snakePosY, orientation))
     return orientation
 
 def movement(orientation, snakePosX, snakePosY):
@@ -53,8 +58,6 @@ def movement(orientation, snakePosX, snakePosY):
             snakePosY -= 1
         case 3:
             snakePosX -= 1
-        case default:
-            snakePosY += 1
     return (snakePosX, snakePosY)
 
 
@@ -73,14 +76,20 @@ while running:
         for pos in snake_body:
             pygame.draw.rect(screen, green, 
                              pygame.Rect(pos[0], pos[1], 10, 10))
-        
+
+        i = 0 #debug code    
+        for bullet in bullets:
+            i += 1 #debug code
+            bullet.bulletTravel()
+            print("Bullet " + str(i) + ": " + " Orientation: " + str(bullet.getOrientation()) + " PositionX: " + str(bullet.getPosX()) + " PositionY: " + str(bullet.getPosY()))
+
         screen.fill(black)
         pygame.draw.rect(screen, white, pygame.Rect(fruitPosition[0], fruitPosition[1], 10, 10))
 
         position = movement(orientation, snakePosX, snakePosY)
         snakePosX = position[0]
         snakePosY = position[1]
-        print("Orientation: " + str(orientation) + " PostionX: " + str(snakePosX) + " PositionY: " + str(snakePosY))
+        print("Orientation: " + str(orientation) + " PostionX: " + str(snakePosX) + " PositionY: " + str(snakePosY)) #debug code
         
         pygame.display.update()
 
