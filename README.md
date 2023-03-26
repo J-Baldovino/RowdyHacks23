@@ -14,3 +14,8 @@ REMEMBER: Add the venv into the .gitignore file or else it will be pushed into t
 IMPORTING VENV: Allows the user to install the venv packages that are used for the project `pip install -r requirements.txt`
 
 UPDATING VENV: When new packages are installed, update the import file $ python -m pip freeze > requirements.txt
+
+# To-Do
+ - Refactor codebase and make components object-oriented  
+ - Implement object generation/dynamic boundary generation 
+ - Create local or remote database that is synced between every application attempt
