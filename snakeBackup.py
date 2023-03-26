@@ -11,8 +11,30 @@ y_window = 480
 black = pygame.Color(0, 0, 0)
 white = pygame.Color(255, 255, 255)
 red = pygame.Color(255, 0, 0)
-orange = pygame.Color(211, 67, 13)
-dark_blue = pygame.Color(12, 35, 64)
+green = pygame.Color(0, 255, 0)
+blue = pygame.Color(0, 0, 255)
+
+#Fruit Sprite
+class Fruit(pygame.sprite.Sprite):
+    def __init__(self, image):
+        super().__init__()
+        self.image = pygame.transform.scale(pygame.image.load(image), (32, 32))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+
+    def update(self, runner):
+        if pygame.sprite.spritecollide(self, )
+        print("Collision detected")
+        self.kill()
+    
+    def render(self, display):
+        display.blit(self.image, self. rect)
+
+fruit = Fruit("sprites/apple.png")
+
+#Background
+backGround = pygame.image.load("sprites/background.png")
+backGround = pygame.transform.scale(backGround, (x_window, y_window))
 
 #Initialize pygame and game window
 pygame.init()
@@ -26,40 +48,20 @@ fps = pygame.time.Clock()
 snake_pos = [100,50]
 
 #Create the beginning snake body
-snake_body = [ [100, 50] ]
+snake_body = [ [100, 50], [90,50], [80, 50], [70, 50] ]
 
 #Fruit positioning and spawn
 fruit_pos = [random.randrange(1, (x_window // 10)) * 10, random.randrange(1, (y_window // 10)) * 10]
 fruit_spawn = True
 
-#Obstacle positioning and spawn
-obst_pos = []
-obst_spawn = True
-
-#Randomly generate obstacle position
-def obst_pos_gen():
-    return [random.randrange(1, (x_window // 10)) * 10, random.randrange(1, (y_window // 10)) * 10]
-
 #Set default snake direction
 direction = "RIGHT"
 change_dir = direction
 
-#Initializes the score
-score = 0
+""" def showFruit():
+    game_window.blit(fruit.image, fruit_pos) """
 
 def game_over():
-    screen_font = pygame.font.SysFont("times new roman", 50)
-
-    game_over_surface = screen_font.render("Final Score: " + str(score), True, red)
-    
-    game_over_rect = game_over_surface.get_rect()
-
-    game_over_rect.midtop = (x_window / 2, y_window / 4)
-
-    #Draw text on screen
-    game_window.blit(game_over_surface, game_over_rect)
-    pygame.display.flip()
-
     time.sleep(2)
 
     #Deactivate pygame
@@ -67,12 +69,11 @@ def game_over():
 
     quit()
 
-#Calls on the position generator once
-print(obst_pos_gen()[0])
-
 #Loop continues the game
 while True:
 
+    game_window.blit(backGround, (0, 0))
+    
     #Movement keys
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -109,9 +110,6 @@ while True:
     snake_body.insert(0, list(snake_pos))
     if snake_pos[0] == fruit_pos[0] and snake_pos[1] == fruit_pos[1]:
         fruit_spawn = False
-        #Increases snake speed whenever a fruit is consumed
-        snake_speed += 2
-        score += 10
     else:
         snake_body.pop()
 
@@ -120,26 +118,26 @@ while True:
         fruit_pos = [random.randrange(1, (x_window // 10)) * 10, random.randrange(1, (y_window // 10)) * 10]
 
     fruit_spawn = True
-    game_window.fill(dark_blue)
 
     for pos in snake_body:
-        snake_rect = pygame.draw.rect(game_window, orange, pygame.Rect(
+        snake_rect = pygame.draw.rect(game_window, green, pygame.Rect(
           pos[0], pos[1], 10, 10))
-        
-    pygame.draw.rect(game_window, white, pygame.Rect(
-        fruit_pos[0], fruit_pos[1], 10, 10))
     
-    obst1 = pygame.draw.rect(game_window, red, pygame.Rect(obst_pos_gen()[0], obst_pos_gen()[1], random.randrange(1, 25), random.randrange(1, 75)))
-    #obst2 = pygame.draw.rect(game_window, red, pygame.Rect(obst_pos_gen()[0], obst_pos_gen()[1], random.randrange(1, 25), random.randrange(1, 75)))
+    """ polygon_points = ((200, 200), (240, 200), (240, 280), (280, 280),
+                      (280, 320), (240, 320), (240, 400), (200, 400),
+                      (200, 360), (160, 360), (160, 300), (200, 300), (200, 200))
+    border = pygame.draw.polygon(game_window, red, polygon_points, 5) """
 
-    pygame.display.flip()
     # Game Over conditions
     if snake_pos[0] < 0 or snake_pos[0] > x_window-10:
         game_over()
     if snake_pos[1] < 0 or snake_pos[1] > y_window-10:
+        game_over()    
+    if snake_rect.colliderect(fruit) :
         game_over()
-    if snake_rect.colliderect(obst1): 
-        game_over()
+
+    #Show's fruit
+    fruit.render(display)
 
     #Refreshing the game screen
     pygame.display.update()

@@ -7,3 +7,6 @@ shakeTemp.py
 random_polygon.png
 __pycache__/
 sprite.py
+bullet.py
+snakeTemp.py
+snakeBackup.py
