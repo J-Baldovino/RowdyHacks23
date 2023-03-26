@@ -9,6 +9,14 @@ red = pygame.Color(255, 0, 0)
 green = pygame.Color(0, 255, 0)
 blue = pygame.Color(0, 0, 255)
 
+#Fruit Sprite
+class Fruit(pygame.sprite.Sprite):
+
+    def __init__(self, image):
+        super().__init__()
+        self.image = pygame.transform.scale(pygame.image.load(image), (32, 32))
+player = Fruit("sprites/apple.png")
+
 #Pygame set up
 pygame.init()
 
@@ -60,6 +68,9 @@ def movement(orientation, snakePosX, snakePosY):
             snakePosX -= 1
     return (snakePosX, snakePosY)
 
+#Display Fruit
+def showFruit():
+    screen.blit(player.image, fruitPosition)
 
 #Main Function
 while running:
@@ -84,7 +95,7 @@ while running:
             print("Bullet " + str(i) + ": " + " Orientation: " + str(bullet.getOrientation()) + " PositionX: " + str(bullet.getPosX()) + " PositionY: " + str(bullet.getPosY()))
 
         screen.fill(black)
-        pygame.draw.rect(screen, white, pygame.Rect(fruitPosition[0], fruitPosition[1], 10, 10))
+        showFruit()
 
         position = movement(orientation, snakePosX, snakePosY)
         snakePosX = position[0]
