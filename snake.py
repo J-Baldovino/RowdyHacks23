@@ -14,6 +14,14 @@ red = pygame.Color(255, 0, 0)
 green = pygame.Color(0, 255, 0)
 blue = pygame.Color(0, 0, 255)
 
+#Fruit Sprite
+class Fruit(pygame.sprite.Sprite):
+
+    def __init__(self, image):
+        super().__init__()
+        self.image = pygame.transform.scale(pygame.image.load(image), (16, 16))
+player = Fruit("sprites/apple.png")
+
 #Initialize pygame and game window
 pygame.init()
 pygame.display.set_caption("RowdyHacks 2023")
@@ -35,6 +43,9 @@ fruit_spawn = True
 #Set default snake direction
 direction = "RIGHT"
 change_dir = direction
+
+def showFruit():
+    game_window.blit(player.image, fruit_pos)
 
 def game_over():
     time.sleep(2)
@@ -96,15 +107,14 @@ while True:
     for pos in snake_body:
         pygame.draw.rect(game_window, green, pygame.Rect(
           pos[0], pos[1], 10, 10))
-        
-    pygame.draw.rect(game_window, white, pygame.Rect(
-        fruit_pos[0], fruit_pos[1], 10, 10))
-    
     # Game Over conditions
     if snake_pos[0] < 0 or snake_pos[0] > x_window-10:
         game_over()
     if snake_pos[1] < 0 or snake_pos[1] > y_window-10:
         game_over()
+
+    #Show's fruit
+    showFruit()
 
     #Refreshing the game screen
     pygame.display.update()
