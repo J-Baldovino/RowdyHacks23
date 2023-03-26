@@ -5,8 +5,6 @@ polyGen.py
 shapes.py
 shakeTemp.py
 random_polygon.png
-<<<<<<< Updated upstream
 __pycache__/
-=======
-RowdyHacks23.code-workspace
->>>>>>> Stashed changes
+sprite.py
+snakeBackup.py

@@ -110,12 +110,20 @@ while True:
     fruit_spawn = True
 
     for pos in snake_body:
-        pygame.draw.rect(game_window, green, pygame.Rect(
+        snake_rect = pygame.draw.rect(game_window, green, pygame.Rect(
           pos[0], pos[1], 10, 10))
+    
+    polygon_points = ((200, 200), (240, 200), (240, 280), (280, 280),
+                      (280, 320), (240, 320), (240, 400), (200, 400),
+                      (200, 360), (160, 360), (160, 300), (200, 300), (200, 200))
+    border = pygame.draw.polygon(game_window, red, polygon_points, 1)
+
     # Game Over conditions
     if snake_pos[0] < 0 or snake_pos[0] > x_window-10:
         game_over()
     if snake_pos[1] < 0 or snake_pos[1] > y_window-10:
+        game_over()    
+    if snake_rect.colliderect(border) :
         game_over()
 
     #Show's fruit
