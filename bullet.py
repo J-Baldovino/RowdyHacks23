@@ -1,5 +1,6 @@
 class Bullet:
 
+    #Made for game.py
     #I was getting attribute errors.
     posX = 0
     posY = 0
