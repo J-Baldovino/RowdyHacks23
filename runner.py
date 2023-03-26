@@ -1,10 +1,8 @@
 import pygame
 import time
 import random
-import threading
-import sched, time, traceback
 
-snake_speed = 15
+runner_speed = 15
 
 x_window = 720
 y_window = 480
@@ -25,10 +23,10 @@ game_window = pygame.display.set_mode((x_window, y_window))
 fps = pygame.time.Clock()
 
 #Default snake position
-snake_pos = [100,50]
+runner_pos = [100,50]
 
 #Create the beginning snake body
-snake_body = [ [100, 50] ]
+runner_body = [ [100, 50] ]
 
 #Fruit positioning and spawn
 fruit_pos = [random.randrange(1, (x_window // 10)) * 10, random.randrange(1, (y_window // 10)) * 10]
@@ -105,23 +103,23 @@ while True:
 
     #Snake movement
     if direction == 'UP':
-        snake_pos[1] -= 10
+        runner_pos[1] -= 10
     if direction == 'DOWN':
-        snake_pos[1] += 10
+        runner_pos[1] += 10
     if direction == 'LEFT':
-        snake_pos[0] -= 10
+        runner_pos[0] -= 10
     if direction == 'RIGHT':
-        snake_pos[0] += 10
+        runner_pos[0] += 10
 
     #Simulates fruit and snake collision 
-    snake_body.insert(0, list(snake_pos))
-    if snake_pos[0] == fruit_pos[0] and snake_pos[1] == fruit_pos[1]:
+    runner_body.insert(0, list(runner_pos))
+    if runner_pos[0] == fruit_pos[0] and runner_pos[1] == fruit_pos[1]:
         fruit_spawn = False
         #Increases snake speed whenever a fruit is consumed
-        snake_speed += 2
+        runner_speed += 2
         score += 10
     else:
-        snake_body.pop()
+        runner_body.pop()
 
     #Respawn fruit in a different position
     if not fruit_spawn:
@@ -130,8 +128,8 @@ while True:
     fruit_spawn = True
     game_window.fill(dark_blue)
 
-    for pos in snake_body:
-        snake_rect = pygame.draw.rect(game_window, orange, pygame.Rect(
+    for pos in runner_body:
+        runner_rect = pygame.draw.rect(game_window, orange, pygame.Rect(
         pos[0], pos[1], 10, 10))
         
     pygame.draw.rect(game_window, white, pygame.Rect(
@@ -141,15 +139,15 @@ while True:
 
     pygame.display.flip()
     # Game Over conditions
-    if snake_pos[0] < 0 or snake_pos[0] > x_window-10:
+    if runner_pos[0] < 0 or runner_pos[0] > x_window-10:
         game_over()
-    if snake_pos[1] < 0 or snake_pos[1] > y_window-10:
+    if runner_pos[1] < 0 or runner_pos[1] > y_window-10:
         game_over()
-    if snake_rect.colliderect(obst1): 
+    if runner_rect.colliderect(obst1): 
         game_over()
 
     #Refreshing the game screen
     pygame.display.update()
 
     #Sets the frames per second
-    fps.tick(snake_speed)
+    fps.tick(runner_speed)
