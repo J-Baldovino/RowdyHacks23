@@ -19,8 +19,12 @@ class Fruit(pygame.sprite.Sprite):
 
     def __init__(self, image):
         super().__init__()
-        self.image = pygame.transform.scale(pygame.image.load(image), (16, 16))
+        self.image = pygame.transform.scale(pygame.image.load(image), (32, 32))
 player = Fruit("sprites/apple.png")
+
+#Background
+backGround = pygame.image.load("sprites/background.png")
+backGround = pygame.transform.scale(backGround, (x_window, y_window))
 
 #Initialize pygame and game window
 pygame.init()
@@ -58,6 +62,8 @@ def game_over():
 #Loop continues the game
 while True:
 
+    game_window.blit(backGround, (0, 0))
+    
     #Movement keys
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
@@ -102,7 +108,6 @@ while True:
         fruit_pos = [random.randrange(1, (x_window // 10)) * 10, random.randrange(1, (y_window // 10)) * 10]
 
     fruit_spawn = True
-    game_window.fill(black)
 
     for pos in snake_body:
         pygame.draw.rect(game_window, green, pygame.Rect(
